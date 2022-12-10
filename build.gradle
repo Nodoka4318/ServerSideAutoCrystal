@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'ml.heartfulcpvp.autocrystal'
+group 'ml.heartfulcpvp.cpvpmodules'
 version '1.0'
 
 repositories {

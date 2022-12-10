@@ -1,6 +1,6 @@
 name: AutoCrystal # the plugins name as it should appear in the plugin list /pl
 version: 1.0 # the plugin's version
 author: Nodoka4318
-main: ml.heartfulcpvp.autocrystal.AutoCrystal
+main: ml.heartfulcpvp.cpvpmodules.CPvPModules
 api-version:
 depend: [ProtocolLib]
