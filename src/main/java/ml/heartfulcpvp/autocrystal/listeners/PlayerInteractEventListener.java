@@ -1,4 +1,4 @@
-package ml.heartfulcpvp.cpvpmodules.listeners;
+package ml.heartfulcpvp.autocrystal.listeners;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;

@@ -1,9 +1,9 @@
-package ml.heartfulcpvp.cpvpmodules;
+package ml.heartfulcpvp.autocrystal;
 
-import ml.heartfulcpvp.cpvpmodules.listeners.PlayerInteractEventListener;
+import ml.heartfulcpvp.autocrystal.listeners.PlayerInteractEventListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CPvPModules extends JavaPlugin {
+public class AutoCrystal extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("やったぜ");
