@@ -4,6 +4,8 @@ import com.comphenix.protocol.PacketType;
 import ml.heartfulcpvp.autocrystal.commands.AutoCrystalCommand;
 import ml.heartfulcpvp.autocrystal.listeners.PlayerInteractEventListener;
 import ml.heartfulcpvp.autocrystal.playerdata.PlayerData;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,7 +17,7 @@ public class AutoCrystal extends JavaPlugin {
         try {
             PlayerData.createPlayerDataFile();
             PlayerData.initPlayerData();
-            getLogger().info("Loaded " + PlayerData.getPlayerData().getPlayerDataList().size() + " player's data.");
+            getLogger().info("Loaded " + PlayerData.getPlayerData().getPlayerDataList().size() + " players' data.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,13 +30,14 @@ public class AutoCrystal extends JavaPlugin {
     public void onDisable() {
         try {
             PlayerData.write();
-            getLogger().info("Saved " + PlayerData.getPlayerData().getPlayerDataList().size() + " player's data.");
+            getLogger().info("Saved " + PlayerData.getPlayerData().getPlayerDataList().size() + " players' data.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void sendInfoMessage(Player player, String message) {
-        player.sendMessage("&c&l[&f&lAutoCrystal&c&l] &f" + message);
+        // player.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "[" + ChatColor.WHITE + "AutoCrystal" + ChatColor.RED + "] " + ChatColor.WHITE + message);
+        player.sendMessage("§c§l[§f§lAutoCrystal§c§l] §f§l" + message);
     }
 }

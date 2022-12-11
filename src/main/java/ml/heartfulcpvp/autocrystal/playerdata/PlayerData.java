@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerData {
     private static final File folder = new File("./plugins/AutoCrystal");
@@ -85,7 +86,7 @@ public class PlayerData {
 
     public void setEnabled(Player player, boolean enabled) {
         for (var d : playerDataList) {
-            if (d.getUuid() == player.getUniqueId()) {
+            if (d.getUuid().toString().equals(player.getUniqueId().toString())) {
                 d.setEnabled(enabled);
                 return;
             }

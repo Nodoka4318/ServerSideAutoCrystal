@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Element {
-    // jsonのライブラリ入れるのだるいから我流フォーマットゆるして:pleading_face:
+    // 我流フォーマットゆるして:pleading_face:
     private UUID uuid;
     private boolean isEnabled;
     private float minDamage;
