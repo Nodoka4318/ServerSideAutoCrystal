@@ -4,3 +4,8 @@ author: Nodoka4318
 main: ml.heartfulcpvp.autocrystal.AutoCrystal
 api-version:
 depend: [ProtocolLib]
+
+commands:
+  autocrystal:
+    description: toggle
+    usage: /autocrystal

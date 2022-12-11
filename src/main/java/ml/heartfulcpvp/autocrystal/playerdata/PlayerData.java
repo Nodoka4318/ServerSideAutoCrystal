@@ -1,64 +1,99 @@
 package ml.heartfulcpvp.autocrystal.playerdata;
 
+import org.bukkit.entity.Player;
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.util.Arrays;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerData {
-    private static final File folder = new File("./plugins/ServerSideAutoCrystal");
-    private static final File playerData = new File("./plugins/ServerSideAutoCrystal/playerdata.txt");
+    private static final File folder = new File("./plugins/AutoCrystal");
+    private static final File playerDataFile = new File("./plugins/AutoCrystal/playerdata.txt");
 
-    private String uuid;
-    private boolean isEnabled;
-    private int minDamage;
+    private static List<Element> playerDataList;
 
-    public PlayerData(String uuid, boolean isEnabled, int minDamage) {
-        this.uuid = uuid;
-        this.isEnabled = isEnabled;
-        this.minDamage = minDamage;
+    public PlayerData() throws IOException {
+        playerDataList = fromFile();
     }
 
-    public String getUuid() {
-        return uuid;
+    private static PlayerData playerData;
+
+    public static void initPlayerData() throws IOException {
+        playerData = new PlayerData();
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
-    }
-
-    public int getMinDamage() {
-        return minDamage;
-    }
-
-    public void setMinDamage(int minDamage) {
-        this.minDamage = minDamage;
+    public static PlayerData getPlayerData() {
+        return playerData;
     }
 
     public static void createPlayerDataFile() throws IOException {
         if (!folder.exists())
             folder.mkdir();
-        if (!playerData.exists())
-            Files.write(playerData.toPath(), List.of(""), StandardCharsets.UTF_8);
+        if (!playerDataFile.exists())
+            Files.createFile(playerDataFile.toPath());
     }
 
-    public String build() {
-        return uuid + ":" + isEnabled + ":" + minDamage;
+    public static List<Element> fromFile() throws IOException {
+        var allLines = Files.readAllLines(playerDataFile.toPath());
+        var elems = new ArrayList<Element>();
+
+        for (var l : allLines) {
+            elems.add(Element.fromLine(l));
+        }
+        return elems;
     }
 
-    public static PlayerData fromLine(String line) {
-        var elems = line.split(":");
-        return new PlayerData(elems[0], Boolean.getBoolean(elems[1]), Integer.getInteger(elems[2]));
+    public boolean isEnabled(Player player) {
+        for (var d : playerDataList) {
+            if (d.getUuid() == player.getUniqueId()) {
+                return d.isEnabled();
+            }
+        }
+        return false;
+    }
+
+    public float getMinDamage(Player player) {
+        for (var d : playerDataList) {
+            if (d.getUuid() == player.getUniqueId()) {
+                return d.getMinDamage();
+            }
+        }
+        return 0;
+    }
+
+    public static void write() throws IOException {
+        if (playerDataFile.delete()) {
+            Files.createFile(playerDataFile.toPath());
+            Files.write(playerDataFile.toPath(),
+                    playerDataList.stream().map(Element::build).toList(),
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.WRITE
+            );
+        } else {
+            throw new IOException("Failed in deleting old data file");
+        }
+    }
+
+    public List<Element> getPlayerDataList() {
+        return playerDataList;
+    }
+
+    public void setEnabled(Player player, boolean enabled) {
+        for (var d : playerDataList) {
+            if (d.getUuid() == player.getUniqueId()) {
+                d.setEnabled(enabled);
+                return;
+            }
+        }
+        playerDataList.add(new Element(player.getUniqueId(), enabled, 0));
+    }
+
+    public void setMinDamage(Player player, float minDamage) {
+        // not implemented yet
     }
 }

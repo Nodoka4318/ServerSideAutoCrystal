@@ -66,3 +66,5 @@ atlassian-ide-plugin.xml
 
 # github actions用
 !gradle/wrapper/gradle-wrapper.jar
+
+/src/main/java/ml/heartfulcpvp/autocrystal/CrystalDamage.java
