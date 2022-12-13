@@ -51,7 +51,7 @@ public class PlayerData {
 
     public boolean isEnabled(Player player) {
         for (var d : playerDataList) {
-            if (d.getUuid() == player.getUniqueId()) {
+            if (d.getUuid().toString().equals(player.getUniqueId().toString())) {
                 return d.isEnabled();
             }
         }
@@ -60,7 +60,7 @@ public class PlayerData {
 
     public float getMinDamage(Player player) {
         for (var d : playerDataList) {
-            if (d.getUuid() == player.getUniqueId()) {
+            if (d.getUuid().toString().equals(player.getUniqueId().toString())) {
                 return d.getMinDamage();
             }
         }
