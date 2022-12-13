@@ -3,7 +3,6 @@ version: 1.0 # the plugin's version
 author: Nodoka4318
 main: ml.heartfulcpvp.autocrystal.AutoCrystal
 api-version:
-depend: [ProtocolLib]
 
 commands:
   autocrystal:

@@ -1,14 +1,14 @@
 package ml.heartfulcpvp.autocrystal.listeners;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import ml.heartfulcpvp.autocrystal.playerdata.PlayerData;
+import net.minecraft.network.PacketDataSerializer;
+import net.minecraft.network.protocol.game.PacketPlayInUseEntity;
+import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.server.network.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerInteractEventListener implements Listener {
-    private final ProtocolManager protocol = ProtocolLibrary.getProtocolManager();
     private Plugin plugin;
 
     public PlayerInteractEventListener(Plugin plugin) {
@@ -54,16 +53,10 @@ public class PlayerInteractEventListener implements Listener {
 
                         var below = entity.getLocation().getBlock().getRelative(BlockFace.DOWN);
                         if (e.getClickedBlock().equals(below)) {
+                            var p = (CraftPlayer) e.getPlayer();
+                            var connection = p.getHandle().b;
 
-                            PacketContainer packet = new PacketContainer(PacketType.Play.Client.USE_ENTITY);
-
-                            packet.getEntityUseActions().write(0, EnumWrappers.EntityUseAction.ATTACK);
-                            packet.getModifier().write(0, entity.getEntityId());
-                            try {
-                                protocol.recieveClientPacket(e.getPlayer(), packet);
-                            } catch (IllegalAccessException | InvocationTargetException ex) {
-                                ex.printStackTrace();
-                            }
+                            // 難読化解読無理ゲーすぎて
                         }
                     }
                 }
